@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sleep Quality Assessment by Age Group</title>
+<style>
+  body {
+    font-family: "Segoe UI", sans-serif;
+    max-width: 700px;
+    margin: auto;
+    padding: 20px;
+    background: #f7f8fc;
+    color: #333;
+  }
+  h1 {
+    text-align: center;
+    color: #2d3e50;
+  }
+  h2 {
+    color: #465a7e;
+    border-bottom: 2px solid #ccd4e0;
+    padding-bottom: 5px;
+  }
+  label {
+    display: block;
+    padding: 6px 0;
+  }
+  button {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    background: #465a7e;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    margin-top: 20px;
+    cursor: pointer;
+  }
+  button:hover {
+    background: #2d3e50;
+  }
+  .result {
+    margin-top: 25px;
+    padding: 15px;
+    background: #e8effc;
+    border-left: 5px solid #465a7e;
+    font-size: 18px;
+  }
+</style>
+</head>
+<body>
+
+<h1>💤 Sleep Quality Assessment by Age Group</h1>
+
+<form id="sleepForm">
+
+  <h2>Part 1: General Information</h2>
+  <p>What is your age group?</p>
+  <label><input type="radio" name="age" value="0"> 0–12 years (Child)</label>
+  <label><input type="radio" name="age" value="0"> 13–17 years (Teenager)</label>
+  <label><input type="radio" name="age" value="0"> 18–25 years (Young Adult)</label>
+  <label><input type="radio" name="age" value="0"> 26–64 years (Working Adult)</label>
+  <label><input type="radio" name="age" value="0"> 65 years and older (Senior)</label>
+
+  <h2>Part 2: Sleeping Behavior</h2>
+  <p>1. On average, how many hours do you sleep per day?</p>
+  <label><input type="radio" name="q1" value="2"> More than 9 hours</label>
+  <label><input type="radio" name="q1" value="3"> 7–9 hours</label>
+  <label><input type="radio" name="q1" value="1"> 5–6 hours</label>
+  <label><input type="radio" name="q1" value="0"> Less than 5 hours</label>
+
+  <p>2. What time do you usually go to bed?</p>
+  <label><input type="radio" name="q2" value="3"> Before 10:00 p.m.</label>
+  <label><input type="radio" name="q2" value="2"> Between 10:00–11:59 p.m.</label>
+  <label><input type="radio" name="q2" value="1"> Between 12:00–1:59 a.m.</label>
+  <label><input type="radio" name="q2" value="0"> After 2:00 a.m.</label>
+
+  <p>3. How often do you wake up in the middle of the night or have trouble staying asleep?</p>
+  <label><input type="radio" name="q3" value="3"> Almost never</label>
+  <label><input type="radio" name="q3" value="2"> Sometimes</label>
+  <label><input type="radio" name="q3" value="1"> Often</label>
+  <label><input type="radio" name="q3" value="0"> Every night</label>
+
+  <p>4. How do you feel after waking up?</p>
+  <label><input type="radio" name="q4" value="3"> Refreshed and energized</label>
+  <label><input type="radio" name="q4" value="2"> Normal</label>
+  <label><input type="radio" name="q4" value="1"> Slightly tired</label>
+  <label><input type="radio" name="q4" value="0"> Very tired or still sleepy</label>
+
+  <p>5. How often do you take naps during the day?</p>
+  <label><input type="radio" name="q5" value="3"> Never or rarely</label>
+  <label><input type="radio" name="q5" value="2"> Sometimes</label>
+  <label><input type="radio" name="q5" value="1"> Often</label>
+  <label><input type="radio" name="q5" value="0"> Every day</label>
+
+  <h2>Part 3: Habits Affecting Sleep Quality</h2>
+  <p>6. Do you use your phone or look at screens within 30 minutes before going to bed?</p>
+  <label><input type="radio" name="q6" value="3"> Never</label>
+  <label><input type="radio" name="q6" value="2"> Occasionally</label>
+  <label><input type="radio" name="q6" value="1"> Often</label>
+  <label><input type="radio" name="q6" value="0"> Every night</label>
+
+  <p>7. Do you feel your total sleep time is sufficient for your age group?</p>
+  <label><input type="radio" name="q7" value="3"> Very sufficient</label>
+  <label><input type="radio" name="q7" value="2"> Somewhat sufficient</label>
+  <label><input type="radio" name="q7" value="1"> Not very sufficient</label>
+  <label><input type="radio" name="q7" value="0"> Not sufficient at all</label>
+
+  <button type="button" onclick="calculateSleepQuality()">🧮 Check My Sleep Quality</button>
+</form>
+
+<div id="result" class="result"></div>
+
+<script>
+function calculateSleepQuality() {
+  let total = 0;
+  const form = document.forms["sleepForm"];
+
+  for (let i = 1; i <= 7; i++) {
+    const val = form["q" + i]?.value;
+    total += Number(val || 0);
+  }
+
+  let level = "";
+  let message = "";
+
+  if (total >= 19) {
+    level = "🌙 Excellent Sleep Quality";
+    message = "You are getting adequate and healthy sleep for your age.";
+  } else if (total >= 13) {
+    level = "😌 Moderate Sleep Quality";
+    message = "You may need to adjust your bedtime or reduce screen use before bed.";
+  } else if (total >= 7) {
+    level = "😴 Poor Sleep Quality";
+    message = "You may not be getting enough rest; consider improving your sleep routine.";
+  } else {
+    level = "⚠️ Insufficient Sleep Quality";
+    message = "You might be sleep-deprived. It's best to review your sleep habits or seek professional advice.";
+  }
+
+  document.getElementById("result").innerHTML = `
+    <strong>${level}</strong><br><br>${message}
+  `;
+}
+</script>
+
+</body>
+</html>
